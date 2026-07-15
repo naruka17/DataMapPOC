@@ -1,0 +1,17 @@
+=== FILE: jobs/autosys/job_Card_Dim_ETL.jil ===
+
+/*
+Domain: Credit card fraud monitoring.
+Purpose: Run the card dimension load.
+Upstream staging: STG_CARD_TXN.
+Downstream main tables and views: DIM_CARD + vw_Card_Fraud_By_Channel.
+Lineage: staging -> job -> sp_Load_DIM_CARD -> DIM_CARD -> vw_Card_Fraud_By_Channel.
+*/
+insert_job: job_Card_Dim_ETL
+job_type: DBPROC
+machine: db_agent_01
+owner: db_admin@db_agent_01
+command: EXEC fraud.sp_Load_DIM_CARD
+start_times: "06:15"
+days_of_week: all
+alarm_if_fail: y

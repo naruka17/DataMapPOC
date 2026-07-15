@@ -1,0 +1,17 @@
+=== FILE: jobs/autosys/job_IB_Dim_ETL.jil ===
+
+/*
+Domain: Internet banking fraud monitoring.
+Purpose: Run the device dimension load.
+Upstream staging: STG_IB_TXN.
+Downstream main tables and views: DIM_CHANNEL_DEVICE + vw_IB_Fraud_By_Device.
+Lineage: staging -> job -> sp_Load_DIM_CHANNEL_DEVICE -> DIM_CHANNEL_DEVICE -> vw_IB_Fraud_By_Device.
+*/
+insert_job: job_IB_Dim_ETL
+job_type: DBPROC
+machine: db_agent_01
+owner: db_admin@db_agent_01
+command: EXEC fraud.sp_Load_DIM_CHANNEL_DEVICE
+start_times: "08:15"
+days_of_week: all
+alarm_if_fail: y

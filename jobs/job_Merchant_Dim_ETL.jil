@@ -1,0 +1,17 @@
+=== FILE: jobs/autosys/job_Merchant_Dim_ETL.jil ===
+
+/*
+Domain: Merchant / POS transaction fraud.
+Purpose: Run the merchant dimension load.
+Upstream staging: STG_MERCHANT_DEVICE.
+Downstream main tables and views: DIM_MERCHANT + vw_Merchant_Fraud_By_Category.
+Lineage: staging -> job -> sp_Load_DIM_MERCHANT -> DIM_MERCHANT -> vw_Merchant_Fraud_By_Category.
+*/
+insert_job: job_Merchant_Dim_ETL
+job_type: DBPROC
+machine: db_agent_01
+owner: db_admin@db_agent_01
+command: EXEC fraud.sp_Load_DIM_MERCHANT
+start_times: "09:15"
+days_of_week: all
+alarm_if_fail: y

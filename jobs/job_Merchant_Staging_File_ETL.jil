@@ -1,0 +1,17 @@
+=== FILE: jobs/autosys/job_Merchant_Staging_File_ETL.jil ===
+
+/*
+Domain: Merchant / POS transaction fraud.
+Purpose: Run the merchant staging load from the file SOR.
+Upstream SOR: SOR_MERCHANT_FILE.
+Downstream staging table: STG_MERCHANT_TXN.
+Lineage: SOR_MERCHANT_FILE -> job -> sp_Load_STG_MERCHANT_TXN_FILE_01 -> STG_MERCHANT_TXN.
+*/
+insert_job: job_Merchant_Staging_File_ETL
+job_type: DBPROC
+machine: db_agent_01
+owner: db_admin@db_agent_01
+command: EXEC fraud_staging.sp_Load_STG_MERCHANT_TXN_FILE_01
+start_times: "05:30"
+days_of_week: all
+alarm_if_fail: y

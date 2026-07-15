@@ -1,0 +1,17 @@
+=== FILE: jobs/autosys/job_IB_Transaction_Fact_ETL.jil ===
+
+/*
+Domain: Internet banking fraud monitoring.
+Purpose: Run the internet banking transaction fact load.
+Upstream staging + dimensions: STG_IB_TXN + DIM_CHANNEL_DEVICE.
+Downstream main tables and views: FACT_IB_TRANSACTION + vw_IB_Fraud_By_Device.
+Lineage: staging + dimensions -> job -> sp_Load_FACT_IB_TRANSACTION -> FACT_IB_TRANSACTION -> vw_IB_Fraud_By_Device.
+*/
+insert_job: job_IB_Transaction_Fact_ETL
+job_type: DBPROC
+machine: db_agent_01
+owner: db_admin@db_agent_01
+command: EXEC fraud.sp_Load_FACT_IB_TRANSACTION
+start_times: "10:15"
+days_of_week: all
+alarm_if_fail: y

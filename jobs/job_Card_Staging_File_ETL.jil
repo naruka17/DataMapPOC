@@ -1,0 +1,17 @@
+=== FILE: jobs/autosys/job_Card_Staging_File_ETL.jil ===
+
+/*
+Domain: Credit card fraud monitoring.
+Purpose: Run the card staging load from the file SOR.
+Upstream SOR: SOR_CARD_FILE.
+Downstream staging table: STG_CARD_TXN.
+Lineage: SOR_CARD_FILE -> job -> sp_Load_STG_CARD_TXN_FILE_01 -> STG_CARD_TXN.
+*/
+insert_job: job_Card_Staging_File_ETL
+job_type: DBPROC
+machine: db_agent_01
+owner: db_admin@db_agent_01
+command: EXEC fraud_staging.sp_Load_STG_CARD_TXN_FILE_01
+start_times: "00:15"
+days_of_week: all
+alarm_if_fail: y

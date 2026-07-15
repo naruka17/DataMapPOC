@@ -1,0 +1,17 @@
+=== FILE: jobs/autosys/job_ATM_Staging_File_ETL_02.jil ===
+
+/*
+Domain: ATM withdrawal fraud monitoring.
+Purpose: Run the ATM location staging load from the file SOR.
+Upstream SOR: SOR_ATM_FILE.
+Downstream staging table: STG_ATM_LOCATION.
+Lineage: SOR_ATM_FILE -> job -> sp_Load_STG_ATM_TXN_FILE_02 -> STG_ATM_LOCATION.
+*/
+insert_job: job_ATM_Staging_File_ETL_02
+job_type: DBPROC
+machine: db_agent_01
+owner: db_admin@db_agent_01
+command: EXEC fraud_staging.sp_Load_STG_ATM_TXN_FILE_02
+start_times: "02:30"
+days_of_week: all
+alarm_if_fail: y

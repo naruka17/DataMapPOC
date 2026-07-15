@@ -1,0 +1,17 @@
+=== FILE: jobs/autosys/job_Merchant_Fact_ETL.jil ===
+
+/*
+Domain: Merchant / POS transaction fraud.
+Purpose: Run the merchant fraud fact load.
+Upstream staging + dimensions: STG_MERCHANT_TXN + DIM_MERCHANT.
+Downstream main tables and views: FACT_MERCHANT_FRAUD + vw_Merchant_Fraud_Daily.
+Lineage: staging + dimensions -> job -> sp_Load_FACT_MERCHANT_FRAUD -> FACT_MERCHANT_FRAUD -> vw_Merchant_Fraud_Daily.
+*/
+insert_job: job_Merchant_Fact_ETL
+job_type: DBPROC
+machine: db_agent_01
+owner: db_admin@db_agent_01
+command: EXEC fraud.sp_Load_FACT_MERCHANT_FRAUD
+start_times: "09:00"
+days_of_week: all
+alarm_if_fail: y

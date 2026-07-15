@@ -1,0 +1,17 @@
+=== FILE: jobs/autosys/job_ATM_Dim_ETL.jil ===
+
+/*
+Domain: ATM withdrawal fraud monitoring.
+Purpose: Run the ATM dimension load.
+Upstream staging: STG_ATM_LOCATION.
+Downstream main tables and views: DIM_ATM + vw_ATM_Fraud_By_Location.
+Lineage: staging -> job -> sp_Load_DIM_ATM -> DIM_ATM -> vw_ATM_Fraud_By_Location.
+*/
+insert_job: job_ATM_Dim_ETL
+job_type: DBPROC
+machine: db_agent_01
+owner: db_admin@db_agent_01
+command: EXEC fraud.sp_Load_DIM_ATM
+start_times: "07:15"
+days_of_week: all
+alarm_if_fail: y

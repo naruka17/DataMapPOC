@@ -1,0 +1,17 @@
+=== FILE: jobs/autosys/job_IB_Staging_File_ETL.jil ===
+
+/*
+Domain: Internet banking fraud monitoring.
+Purpose: Run the internet banking session staging load from the file SOR.
+Upstream SOR: SOR_IB_FILE.
+Downstream staging table: STG_IB_SESSION.
+Lineage: SOR_IB_FILE -> job -> sp_Load_STG_IB_SESSION_FILE_01 -> STG_IB_SESSION.
+*/
+insert_job: job_IB_Staging_File_ETL
+job_type: DBPROC
+machine: db_agent_01
+owner: db_admin@db_agent_01
+command: EXEC fraud_staging.sp_Load_STG_IB_SESSION_FILE_01
+start_times: "03:00"
+days_of_week: all
+alarm_if_fail: y

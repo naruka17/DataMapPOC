@@ -1,0 +1,17 @@
+=== FILE: jobs/autosys/job_Card_Alert_Fact_ETL.jil ===
+
+/*
+Domain: Credit card fraud monitoring.
+Purpose: Run the card alert fact load.
+Upstream staging + dimensions: STG_CARD_ALERT + DIM_CARD.
+Downstream main tables and views: FACT_CARD_ALERT + vw_Card_Fraud_By_Channel.
+Lineage: staging + dimensions -> job -> sp_Load_FACT_CARD_ALERT -> FACT_CARD_ALERT -> vw_Card_Fraud_By_Channel.
+*/
+insert_job: job_Card_Alert_Fact_ETL
+job_type: DBPROC
+machine: db_agent_01
+owner: db_admin@db_agent_01
+command: EXEC fraud.sp_Load_FACT_CARD_ALERT
+start_times: "10:00"
+days_of_week: all
+alarm_if_fail: y
